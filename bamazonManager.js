@@ -36,6 +36,7 @@ let connection = mysql.createConnection({
               ShowProducts();
               break;
           case "View Low Inventory":
+              ShowLowInventory();
               break;
           case "Add to Inventory":
               break;
@@ -58,3 +59,26 @@ let connection = mysql.createConnection({
         }
       });
   }
+
+function ShowLowInventory() {
+
+    connection.query("SELECT * FROM products", function (err, res) {
+        if (err) throw err;
+
+        let lowStockFound = false;
+        console.log("-----------------------------------");
+
+        for (let i = 0; i < res.length; i++) {
+
+            if (res[i].stock_quantity <= 5) {
+                lowStockFound = true;
+                console.log(`${res[i].item_id} | ${res[i].product_name} | ${res[i].department_name} | ${res[i].price} | ${res[i].stock_quantity}`);
+                console.log("-----------------------------------");
+            }
+        }
+        
+        if (!lowStockFound)
+            console.log("All items in stock.");
+    });
+
+}
