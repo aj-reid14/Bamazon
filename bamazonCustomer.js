@@ -87,7 +87,9 @@ let connection = mysql.createConnection({
 
                 productFound = true;
 
-                if (res[i].stock_quantity > userOrder.userQuantity) {
+                if (userOrder.userQuantity > res[i].stock_quantity) {
+                    console.log("Puchase Failed - Insufficient Stock")
+                } else {
                     let query = connection.query(
                         "UPDATE products SET ? WHERE ?", [
                             {stock_quantity: res[i].stock_quantity - userOrder.userQuantity}, 
@@ -105,7 +107,7 @@ let connection = mysql.createConnection({
         connection.end();
 
         if (!productFound)
-            console.log("Product not found.");
+            console.log("Purchase Failed - Product not found.");
 
       });
   }
