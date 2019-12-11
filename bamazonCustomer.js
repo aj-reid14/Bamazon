@@ -18,6 +18,21 @@ const connection = mysql.createConnection({
   connection.connect(function(err) {
     if (err) throw err;
     console.log(`connected as id ${connection.threadId}`);
-    connection.end();
-    // ShowProducts();
+    ShowProducts();
   });
+  
+  function ShowProducts() {
+    connection.query("SELECT * FROM products", function(err, res) {
+      if (err) throw err;
+      
+      console.log("ID | Item Name | Department | Price | Stock (Quantity)");
+      console.log("-----------------------------------");
+
+      for (let i = 0; i < res.length; i++) {
+        console.log(`${res[i].item_id} | ${res[i].product_name} | ${res[i].department_name} | ${res[i].price} | ${res[i].stock_quantity}`);
+        console.log("-----------------------------------");
+      }
+    });
+    connection.end();
+  }
+  
