@@ -67,8 +67,8 @@ let connection = mysql.createConnection({
           }
       ]).then(function(response) {
           if (!response.confirm) {
+              connection.end();
               console.log("Come back when you are ready to shop!");
-              RestartConnection();
           } else {
             UpdateBamazon(response);
           }
