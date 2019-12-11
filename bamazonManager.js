@@ -47,6 +47,7 @@ function UpdateBamazon(user) {
                 AddToInventory(res);
                 break;
             case "Add New Product":
+                AddNewProduct();
                 break;
         }
 
@@ -110,12 +111,61 @@ function AddToInventory(products) {
                     if (err) throw err;
                     console.log("Stock Updated!");
                     connection.end();
-                })
+                });
 
                 break;
             }
         }
     })
+}
+
+function AddNewProduct() {
+
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "product",
+            message: "Enter Product Name: "
+        }, {
+            type: "input",
+            name: "department",
+            message: "Enter Product's Department: "
+        }, {
+            type: "input",
+            name: "price",
+            message: "Enter the Price: $"
+        }, {
+            type: "input",
+            name: "quantity",
+            message: "Enter Quantity to Add to Inventory: "
+        }
+    ]).then(function(user) {
+
+        if (!user.product || !user.department || !user.price || !user.quantity) {
+            console.log("Action Failed - Invalid Product Information");
+        } else {
+
+            let post = {
+                product_name: user.product,
+                department_name: user.department,
+                price: parseFloat(user.price).toFixed(2),
+                stock_quantity: parseInt(user.quantity)
+            };
+
+            connection.query("INSERT INTO products SET ?", post, function(err, result) {
+                if (err) throw err;
+
+                console.log("-----------------------------------");
+                console.log("New Product Added to Inventory!");
+                console.log("-----------------------------------");
+                console.log(`${user.product} | ${user.department} | ${user.price} | ${user.quantity}`);
+
+            })
+
+        }
+        connection.end();
+    })
+
 }
 
 function RestartConnection() {
