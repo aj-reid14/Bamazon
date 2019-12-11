@@ -53,7 +53,7 @@ let connection = mysql.createConnection({
       inquirer.prompt([
           {
               type: "input",
-              message: "Enter a Produt: ",
+              message: "Enter a Produt (ID): ",
               name: "userProduct"
           }, {
               type: "input",
