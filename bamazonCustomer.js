@@ -96,8 +96,10 @@ let connection = mysql.createConnection({
                             {item_id: userOrder.userProduct}
                         ], function(err, result) {
                         if (err) throw err;
-
-                        console.log(result.affectedRows + " products updated!");
+                        let cost = parseInt(userOrder.userQuantity) * res[i].price;
+                        console.log("Thank you for your purchase!");
+                        console.log("----------------------------");
+                        console.log(`RECEIPT: ${res[i].product_name} - (x${userOrder.userQuantity}), $${cost.toFixed(2)}`);
                     })}
 
                 break;
