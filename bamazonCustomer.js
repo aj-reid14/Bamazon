@@ -90,8 +90,7 @@ let connection = mysql.createConnection({
                 if (userOrder.userQuantity > res[i].stock_quantity) {
                     console.log("Puchase Failed - Insufficient Stock")
                 } else {
-                    let query = connection.query(
-                        "UPDATE products SET ? WHERE ?", [
+                    connection.query("UPDATE products SET ? WHERE ?", [
                             {stock_quantity: res[i].stock_quantity - userOrder.userQuantity}, 
                             {item_id: userOrder.userProduct}
                         ], function(err, result) {
