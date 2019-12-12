@@ -15,23 +15,6 @@ let connection = mysql.createConnection({
     ShowProducts();
   });
 
-  function RestartConnection() {
-      connection = mysql.createConnection({
-          host: "localhost",
-          port: 3306,
-          user: "root",
-          password: "bootySHAKE",
-          database: "bamazon"
-      });
-      
-      connection.connect(function(err) {
-        if (err) throw err;
-        console.log(`connected as id ${connection.threadId}`);
-        ShowProducts();
-    })
-
-  }
-  
   function ShowProducts() {
     connection.query("SELECT * FROM products", function(err, res) {
       if (err) throw err;
@@ -109,6 +92,5 @@ let connection = mysql.createConnection({
 
         if (!productFound)
             console.log("Purchase Failed - Product not found.");
-
       });
   }

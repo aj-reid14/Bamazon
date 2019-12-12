@@ -167,13 +167,3 @@ function AddNewProduct() {
     })
 
 }
-
-function RestartConnection() {
-    connection = mysql.createConnection({
-        host: "localhost",
-        port: 3306,
-        user: "root",
-        password: "bootySHAKE",
-        database: "bamazon"
-    });
-}
